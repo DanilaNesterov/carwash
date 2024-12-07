@@ -1,0 +1,67 @@
+{% extends 'wash/base.html' %}
+
+{% block title %}Записать клиента{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Записать клиента</h2>
+
+<form method="POST" class="needs-validation" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="client_id" class="form-label">Клиент:</label>
+        <select id="client_id" name="client_id" class="form-select" required>
+            {% for client in clients %}
+                <option value="{{ client.id }}">{{ client.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="service_id" class="form-label">Услуга:</label>
+        <select id="service_id" name="service_id" class="form-select" required>
+            {% for service in services %}
+                <option value="{{ service.id }}">
+                    {{ service.name }} ({{ service.price }} руб., {{ service.duration }} минут)
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="washer_id" class="form-label">Мойщик:</label>
+        <select id="washer_id" name="washer_id" class="form-select" required>
+            {% for washer in washers %}
+                <option value="{{ washer.id }}">{{ washer.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="box_id" class="form-label">Бокс:</label>
+        <select id="box_id" name="box_id" class="form-select">
+            {% for box in boxes %}
+                <option value="{{ box.id }}">
+                    {{ box }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="booking_time" class="form-label">Время записи:</label>
+        <input type="datetime-local" id="booking_time" name="booking_time" class="form-control" min="{{ current_time }}" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Записать</button>
+</form>
+
+{% if messages %}
+    <div class="mt-4">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

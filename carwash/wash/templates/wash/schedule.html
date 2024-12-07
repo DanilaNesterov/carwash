@@ -1,0 +1,32 @@
+{% extends 'wash/base.html' %}
+
+{% block title %}Расписание{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Расписание</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Клиент</th>
+            <th>Услуга</th>
+            <th>Мойщик</th>
+            <th>Бокс</th>
+            <th>Время</th>
+            <th>Цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.client.name }}</td>
+                <td>{{ booking.service.name }}</td>
+                <td>{{ booking.washer.name }}</td>
+                <td>{{ booking.box.number }}</td>
+                <td>{{ booking.booking_time|date:"d.m.Y H:i" }}</td>
+                <td>{{ booking.total_price }} руб.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
