@@ -14,7 +14,7 @@ class Service(models.Model):
     class Meta:
         verbose_name = 'Услуга'
         verbose_name_plural = 'Услуги'
-        ordering = ['name']  # Автоматическая сортировка по названию услуги
+        ordering = ['name']
 
 
 class Client(models.Model):
@@ -91,4 +91,4 @@ class CarWashBooking(models.Model):
     class Meta:
         verbose_name = 'Запись на мойку'
         verbose_name_plural = 'Записи на мойку'
-        ordering = ['booking_time']  # Автоматическая сортировка по времени записи
+        ordering = ['booking_time']
