@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Service, Washer, Box, CarWashBooking, Client
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def book_service(request):
@@ -101,6 +102,30 @@ def book_service(request):
 
 
 def schedule(request):
-    """Просмотр расписания записей, отсортированных по времени."""
+    """Просмотр расписания записей с пагинацией."""
     bookings = CarWashBooking.objects.select_related('client', 'service', 'washer', 'box').order_by('booking_time')
-    return render(request, 'wash/schedule.html', {'bookings': bookings})
+    
+    # Настройка пагинации
+    paginator = Paginator(bookings, 10)  # 10 записей на страницу
+    page = request.GET.get('page', 1)  # Получение текущей страницы
+
+    try:
+        bookings_page = paginator.page(page)
+    except PageNotAnInteger:
+        bookings_page = paginator.page(1)  # Если page не целое число, показать первую страницу
+    except EmptyPage:
+        bookings_page = paginator.page(paginator.num_pages)  # Если page за пределами диапазона, показать последнюю страницу
+
+    return render(request, 'wash/schedule.html', {'bookings': bookings_page})
+
+
+def handler_404(request, exception):
+    return render(request, 'wash/404.html', status=404)
+
+
+def handler_500(request):
+    return render(request, 'wash/500.html', status=500)
+
+
+def handler_403(request, exception=None):
+    return render(request, 'wash/403.html', status=403)

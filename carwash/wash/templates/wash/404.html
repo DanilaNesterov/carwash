@@ -1,0 +1,11 @@
+{% extends 'wash/base.html' %}
+
+{% block title %}Страница не найдена{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1>404</h1>
+    <p>К сожалению, страница, которую вы ищете, не найдена.</p>
+    <a href="{% url 'book_service' %}" class="btn btn-primary">Вернуться на главную</a>
+</div>
+{% endblock %}

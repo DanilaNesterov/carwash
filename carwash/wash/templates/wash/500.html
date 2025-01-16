@@ -1,0 +1,11 @@
+{% extends 'wash/base.html' %}
+
+{% block title %}Ошибка сервера{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1>500</h1>
+    <p>На сервере произошла ошибка. Мы работаем над ее устранением.</p>
+    <a href="{% url 'book_service' %}" class="btn btn-primary">Вернуться на главную</a>
+</div>
+{% endblock %}

@@ -17,6 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
+handler404 = 'wash.views.handler_404'
+handler500 = 'wash.views.handler_500'
+handler403 = 'wash.views.handler_403'
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('wash.urls')),
